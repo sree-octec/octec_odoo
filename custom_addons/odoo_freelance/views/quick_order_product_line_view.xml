@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="quick_order_product_view_tree" model="ir.ui.view">
+        <field name="name">quick.order.product.view.tree</field>
+        <field name="model">quick.order.product.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_id" widget="many2one"/>
+                <field name="quantity"/>
+            </list>
+        </field>
+    </record>      
+    <record id="action_quick_order_product_line" model="ir.actions.act_window">
+      <field name="name">Quick Order</field>
+      <field name="res_model">quick.order.product.line</field>
+      <field name="view_mode">list</field>
+    </record>  
+</odoo>

@@ -1,0 +1,91 @@
+<odoo>
+    <record id="practice_employee_detail_view_form" model="ir.ui.view">
+        <field name="name">practice.employee.detail.view.form</field>
+        <field name="model">practice.employee.detail</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget='image' class="oe_avatar" readonly="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference_number"/>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="age"/>
+                            <field name="resource_calendar_id"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="phone_number"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Project Details">
+                            <field name="practice_project_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="domain"/>
+                                    <field name="cost"/>
+                                    <field name="start_date"/>
+                                    <field name="phase"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="practice_employee_detail_view_list" model="ir.ui.view">
+        <field name="name">practie.employee.detail.view.list</field>
+        <field name="model">practice.employee.detail</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="reference_number"/>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="email"/>
+                <field name="phone_number"/>
+            </list>
+        </field>
+    </record>
+    <record id="practice_employee_detail_view_kanban" model="ir.ui.view">
+        <field name="name">practice.employee.detail.view.kanban</field>
+        <field name="model">practice.employee.detail</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <templates>
+                    <t t-name="card">
+                        <div class="row">
+                            <div class="col-4">
+                                <field name="image" widget='image' class="oe_avatar" readonly="1"/>                        
+                            </div>
+                            <div class="col-8">
+                                <field class="fw-bolder" name="name"/>
+                                <div>
+                                    <field name="age"/>
+                                </div>
+                                <div>
+                                    <field class="text-muted" name="email"/>
+                                </div>
+                                <div>
+                                    <span>Alloted Projects : </span>
+                                    <field name="project_count"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="practice_employee_detail_action" model="ir.actions.act_window">
+        <field name="name">Employee Details</field>
+        <field name="res_model">practice.employee.detail</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+</odoo>

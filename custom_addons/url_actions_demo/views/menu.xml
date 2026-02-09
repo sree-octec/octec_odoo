@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <menuitem id="menu_url_actions_demo"
+  name="Url Actions Demo"
+  sequence="40"/>
+
+  <menuitem id="menu_url_demo"
+  parent="menu_url_actions_demo"
+  action="action_demo_url"
+  sequence="10"/>
+</odoo>

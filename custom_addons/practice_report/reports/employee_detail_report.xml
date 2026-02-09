@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="employee_detail_report">
+        <t t-call="web.html_container">
+            <t t-set="layout_document_title" t-value="False"/>
+            <t t-call="web.external_layout">
+            <t t-set="address" t-value="False"/>
+                <t t-foreach="docs" t-as="o">
+                            <div class="page">
+                                <h3 class="text-center">Employee Details</h3>
+                                    <table class="table table-bordered mt32">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center"><span>Name</span></th>
+                                                <th class="text-center"><span>Age</span></th>
+                                                <th class="text-center"><span>Email</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center">
+                                                <td><span t-field="o.name"/></td>
+                                                <td><span t-field="o.age"/></td>
+                                                <td><span t-field="o.email"/></td>
+                                                <td><img src="report/barcode/qr/hai" height="40" width="40"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </t>
+            </t>
+        </t>
+    </template>
+</odoo>

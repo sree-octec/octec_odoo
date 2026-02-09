@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+    id="Purchase_order_menu"
+    name="Approval"
+    parent="purchase.menu_purchase_config"
+    action="odoo_freelance.action_odoo_freelance_quick_order"
+    sequence="65"/>
+</odoo>

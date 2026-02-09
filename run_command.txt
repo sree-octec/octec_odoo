@@ -1,0 +1,1 @@
+python ./odoo-18/odoo-bin --addons-path=./odoo-18/odoo/addons,./custom_addons -d test -u octec --load=base,web --http-port=8082

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Customer Update Form View -->
+    <record id="si_custom_customer_update_view_form" model="ir.ui.view">
+        <field name="name">si.custom.customer.view.form</field>
+        <field name="model">si_custom.customer_update</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="customer_id" widget="many2one"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="update_sale_order_customer"
+                    type="object"
+                    string="update"
+                    class="oe_highlight"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="si_custom_customer_update_action" model="ir.actions.act_window">
+        <field name="name">Customer Update</field>
+        <field name="res_model">si_custom.customer_update</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

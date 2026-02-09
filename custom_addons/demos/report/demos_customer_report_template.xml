@@ -1,0 +1,47 @@
+<odoo>
+    <template id="demos_customer_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <h2 style="text-align:center;">
+                            Customer Report
+                        </h2>
+
+                        <table class="table table-sm table-bordered">
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><span t-field="o.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><span t-field="o.email"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone</strong></td>
+                                <td><span t-field="o.phone_number"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date of Birth</strong></td>
+                                <td><span t-field="o.dob"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address</strong></td>
+                                <td><span t-field="o.address"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pin Code</strong></td>
+                                <td><span t-field="o.pin_code"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Country</strong></td>
+                                <td><span t-field="o.country"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+
+            </t>
+        </t>
+    </template>
+</odoo>

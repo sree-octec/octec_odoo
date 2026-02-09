@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="demos_root_menu"
+    name="demos"
+    sequence="50"/>
+
+    <menuitem id="demos_customer_menu"
+    action="demos_customer_action"
+    parent="demos_root_menu"
+    sequence="10"/>
+
+    <menuitem id="demos_product_menu"
+    action="demos_produt_action"
+    parent="demos_root_menu"
+    sequence="20"
+    />
+
+    <menuitem id="demos_sale_menu"
+    action="demos_sale_action"
+    parent="demos_root_menu"
+    sequence="30"/>
+</odoo>

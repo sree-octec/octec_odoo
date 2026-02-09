@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="octec_student_view_form" model="ir.ui.view">
+        <field name="name">octec.student.view.form</field>
+        <field name="model">octec.student</field>
+        <field name="arch" type="xml">
+            <form string="Students">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button class="oe_stat_button" 
+                                type="object" 
+                                string="Class Session" 
+                                icon="fa-book"                    
+                                name="action_get_students_session_record">
+                        </button>
+                        <button class="oe_stat_button" 
+                                type="object" 
+                                string="Fees" 
+                                icon="fa-dollar"                    
+                                name="action_get_students_fee_payment_record">
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                                <field name="name"/>
+                        </group>
+                        <group>
+                                <field name="photo" widget="image" class="oe_avatar" nolabel="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                      <page string="Personel Details">
+                        <group>
+                          <group>
+                                <field name="address_1"/>
+                                <field name="address_2"/>
+                                <field name="city"/>
+                                <field name="state"/>
+                                <field name="pin_code"/>
+                          </group>
+                          <group>
+                            <field name="phone_number"/>
+                              <field name="email"/>
+                              <field name="qualification"/>
+                              <field name="parent_name"/>
+                              <field name="parent_phone_number"/>
+                          </group>
+                        </group>
+                      </page>
+                      <page string="Academic Details">
+                          <group>
+                            <group>
+                              <field name="college"/>
+                              <field name="semester" widget="selection"/>
+                              <field name="scheme_id" widget="selection"/>
+                              <field name="module_fee"/>
+                            </group>
+                            <group>
+                              <field name="dept_id" widget="selection"/>
+                              <field name="student_type" widget="selection"/>
+                            </group>
+                          </group>
+                      </page>
+                       <page string="Subject Details">
+                              <field name="subject_ids" widget="many2many"/>
+                      </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="octec_student_view_tree" model="ir.ui.view">
+        <field name="name">octec.student.view.tree</field>
+        <field name="model">octec.student</field>
+        <field name="arch" type="xml">
+            <list string="Students">
+                <field name="name"/>
+                <field name="college"/>
+                <field name="dept_id" widget="selection"/>
+                <field name="subject_ids" widget="many2many_tags" />
+                <field name="phone_number"/>
+                <field name="parent_phone_number"/>
+                <field name="student_type" widget="selection"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="octec_student_action" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">octec.student</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Student
+            </p>
+        </field>
+    </record>
+</odoo>

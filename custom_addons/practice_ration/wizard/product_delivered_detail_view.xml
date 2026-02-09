@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_delivered_detail_view_form" model="ir.ui.view">
+        <field name="name">product.delivered.detail.view.form</field>
+        <field name="model">product.delivered.detail</field>
+        <field name="arch" type="xml">
+            <form string="Delivered Orders">
+                <sheet>
+                    <group>
+                        <field name="sale_order_ids" readonly="1">
+                            <list>
+                                <field name="date_order"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

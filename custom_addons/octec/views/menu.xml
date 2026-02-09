@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_daily_class"
+            name="Class"
+            action="octec_daily_class_action"
+    />
+    <menuitem id="menu_students"
+            name="Students"
+            action="octec_student_action"
+    />
+    <menuitem id="menu_staffs"
+            name="Staffs"
+            action="octec_staff_action"
+    />
+    <menuitem id="menu_back_office" name="Back Office" action="octec_payment_action">
+        <menuitem id="sub_menu_expenses"
+            name="Expenses &amp; Payout"
+            action="octec_payment_action"
+        />
+        <menuitem id="sub_menu_departments"
+            name="Departments"
+            action="action_octec_department"
+        />
+        <menuitem id="sub_menu_schemes"
+            name="Schemes"
+            action="octec_scheme_action"
+        />
+        <menuitem id="sub_menu_subjects"
+            name="Subjects"
+            action="action_octec_subject"
+        />
+    </menuitem>
+</odoo>

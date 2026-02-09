@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odoo_freelance_customer_change_view_form" model="ir.ui.view">
+        <field name="name">odoo.freelance.customer.change.view.form</field>
+        <field name="model">odoo.freelance.customer.change</field>
+        <field name="arch" type="xml">
+            <form string="Config Wizard Steps">
+                <sheet>
+                    <group>
+                        <field name="partner_id" widget="many2one"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" class="btn-primary" type="object" name="action_update_customer"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>      
+    <record id="action_odoo_freelance_customer_change" model="ir.actions.act_window">
+      <field name="name">Customer Change</field>
+      <field name="res_model">odoo.freelance.customer.change</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>  
+</odoo>

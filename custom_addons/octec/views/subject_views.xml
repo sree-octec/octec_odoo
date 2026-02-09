@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="octec_subject_view_form" model="ir.ui.view">
+        <field name="name">octec.subject.view.form</field>
+        <field name="model">octec.subject</field>
+        <field name="arch" type="xml">
+            <form string="Subjects">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="semester"/>
+                        <field name="scheme_id"/>
+                        <field name="dept_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+        <record id="octec_subject_view_list" model="ir.ui.view">
+        <field name="name">octec.subject.view.list</field>
+        <field name="model">octec.subject</field>
+        <field name="arch" type="xml">
+            <list string="Subjects">
+                <field name="name"/>
+                <field name="semester"/>
+                <field name="scheme_id"/>
+                <field name="dept_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_octec_subject" model="ir.actions.act_window">
+        <field name="name">Subjects</field>
+        <field name="res_model">octec.subject</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Subject
+            </p>
+        </field>
+    </record>
+</odoo>

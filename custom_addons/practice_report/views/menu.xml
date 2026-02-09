@@ -1,0 +1,16 @@
+<odoo>
+    <menuitem 
+        id="practice_report_root_menu" 
+        name="Reports" 
+        sequence="60">
+        <menuitem 
+        id="practice_report_employee_menu"
+        action="practice_employee_detail_action"
+        sequence="1"
+        />
+        <menuitem id="practice_project_detail_menu"
+        action="practice_project_detail_action"
+        groups="practice_report.group_employee_manager"
+        sequence="2"/>
+    </menuitem>
+</odoo>

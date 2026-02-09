@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+    id="quick_order_menu"
+    name="Quick Order"
+    parent="sale.sale_menu_root"
+    action="odoo_freelance.action_odoo_freelance_quick_order"
+    sequence="65"/>
+</odoo>

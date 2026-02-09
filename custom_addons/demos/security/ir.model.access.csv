@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_demos_customer,access.demos.customer,model_demos_customer,base.group_user,1,1,1,1
+access_demos_product,access.demos.product,model_demos_product,base.group_user,1,1,1,1
+access_demos_sale,access.demos.sale,model_demos_sale,base.group_user,1,1,1,1
+access_demos_sale_order_line,access.demos.sale.order.line,model_demos_sale_order_line,base.group_user,1,1,1,1

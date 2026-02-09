@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="quick_order_report" model="ir.actions.report">
+        <field name="name">Quick Order PDF</field>
+        <field name="model">odoo.freelance.quick.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_freelance.report_quick_order_with_payments</field>
+        <field name="report_file">odoo_freelance.report_quick_order_with_payments</field>
+        <field name="binding_model_id" ref="model_odoo_freelance_quick_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

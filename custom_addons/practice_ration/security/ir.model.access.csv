@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ration_product_detail,access.ration.product.detail,model_ration_product_detail,base.group_user,1,1,1,1
+access_product_specification,access.product.specification,model_product_specification,base.group_user,1,1,1,1
+access_product_delivered_detail,access.product.delivered.detail,model_product_delivered_detail,base.group_user,1,1,1,1

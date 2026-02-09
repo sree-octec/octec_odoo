@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="real_estate_demo_data" model="estate.property">
+            <field name="name">Artech</field>
+            <field name="description">Newly Build Traditional House</field>
+            <field name="postcode">691577</field>
+            <field name="date_availability">03-12-2025</field>
+            <field name="expected_price">2500000</field>
+            <field name="selling_price">2300000</field>
+            <field name="bedrooms">4</field>
+            <field name="living_area">2400</field>
+            <field name="facades">2</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">400</field>
+            <field name="garden_orientation">north</field>
+        </record>
+    </data>
+</odoo>

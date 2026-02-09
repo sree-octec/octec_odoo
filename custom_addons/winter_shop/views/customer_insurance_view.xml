@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_insurance_view_form" model="ir.ui.view">
+        <field name="name">customer.insurance.view.form</field>
+        <field name="model">customer.insurance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="insurance_partner_id"/>
+                        <field name="insurance_count"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="customer_insurance_view_tree" model="ir.ui.view">
+        <field name="name">customer.insurance.view.tree</field>
+        <field name="model">customer.insurance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="insurance_count"/>
+            </list>
+        </field>
+    </record>
+    <record id="customer_insurance_action" model="ir.actions.act_window">
+        <field name="name">Customers Insurance</field>
+        <field name="res_model">customer.insurance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

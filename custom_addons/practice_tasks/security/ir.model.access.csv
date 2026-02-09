@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_practice_shop,access.practice.shop,model_practice_shop,base.group_user,1,1,1,1
+access_practice_shop_franchise,access.practice.shop.franchise,model_practice_shop_franchise,base.group_user,1,1,1,1

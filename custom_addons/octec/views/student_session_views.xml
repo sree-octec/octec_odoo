@@ -1,0 +1,58 @@
+<odoo>
+  <record id="octec_student_session_view_form" model="ir.ui.view">
+    <field name="name">octec.student.session.view.form</field>
+    <field name="model">octec.student.session</field>
+    <field name="arch" type="xml">
+      <form string="Student Session">
+        <sheet>
+          <group>
+          <group>
+            <field name="student_id" widget="selection" readonly="1"/>
+            <field name="subject_id" widget="selection"/>
+            <field name="staff_id" widget="selection"/>
+            <field name="module_count"/>
+            <field name="selected_modules"/>
+            <field name="module_fee"/>
+          </group>
+          <group>
+            <field name="discount"/>
+            <field name="total_fee"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="status" widget="selection"/>
+          </group>
+        </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="octec_student_session_view_tree" model="ir.ui.view">
+    <field name="name">octec.student.session.view.tree</field>
+    <field name="model">octec.student.session</field>
+    <field name="arch" type="xml">
+      <list string="Student Session">
+        <field name="student_id"/>
+        <field name="subject_id"/>
+        <field name="staff_id"/>
+        <field name="module_count"/>
+        <field name="selected_modules"/>
+        <field name="start_date"/>
+        <field name="end_date"/>
+        <field name="total_fee"/>
+        <field name="status"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="octec_student_session_action" model="ir.actions.act_window">
+    <field name="name">Student Sessions</field>
+    <field name="res_model">octec.student.session</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Create a new Student session
+        </p>
+    </field>
+  </record>
+</odoo>

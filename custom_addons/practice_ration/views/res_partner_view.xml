@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="name">res.partner.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button 
+                type="object"
+                name="user_dummy"
+                class="oe_stat_button"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="reservation_type"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="products">
+                    <field name="ration_product_ids" widget="one2many" >
+                        <list editable="bottom">
+                            <field name="product_template_id"/>
+                            <field name="reserved_quantity"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

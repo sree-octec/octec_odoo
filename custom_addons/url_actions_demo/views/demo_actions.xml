@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="action_open_external_link" model="ir.actions.act_url">
+    <field name="name">External Link</field>
+    <field name="url">https://www.google.com</field>
+    <field name="target">new</field>
+  </record>
+
+  <record id="action_download_pdf" model="ir.actions.act_url">
+    <field name="name">Download</field>
+    <field name="url">/demo_url_actions/download/sample</field>
+    <field name="target">download</field>
+  </record>
+</odoo>

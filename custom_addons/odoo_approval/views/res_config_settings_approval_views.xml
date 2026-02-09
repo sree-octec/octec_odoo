@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_approval_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.approval.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='purchase']/block[@name='purchase_setting_container']/setting[@id='po_order_approval']/div[hasclass('content-group')]" position="inside">
+                <div class="row mt-2" invisible="not po_order_approval">
+                    <field name="is_po_two_level_approval" class="col flex-grow-0 ml16 mr0 pe-2"/>
+                    <div class="col ps-0">
+                        <label for="is_po_two_level_approval"/>
+                        <div class="text-muted">Request higher authorities to approve orders above minimum amount</div>
+                    </div>
+                </div>
+                <div class="row mt-2" invisible="not is_po_two_level_approval">
+                    <label for="approval_user" class="col-lg-4 ms-5 ps-2 o_light_label"/>
+                    <field name="approval_user" widget="many2one" class="col-lg-7" domain= "[('share','=',False)]"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="practice_project_detail_view_form" model="ir.ui.view">
+        <field name="name">practice.project.detail.view.form</field>
+        <field name="model">practice.project.detail</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="cost"/>
+                            <field name="domain"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="phase"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Project Members">
+                            <field name="practice_employee_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="practice_project_detail_view_list" model="ir.ui.view">
+        <field name="name">practice.project.detail.view.list</field>
+        <field name="model">practice.project.detail</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="domain"/>
+                <field name="start_date"/>
+                <field name="phase"/>
+            </list>
+        </field>
+    </record>
+        <record id="practice_project_detail_view_kanban" model="ir.ui.view">
+        <field name="name">practice.project.detail.view.kanban</field>
+        <field name="model">practice.project.detail</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <templates>
+                    <t t-name="card">
+                        <div class="row">
+                            <field class="fw-bolder" name="name"/>
+                        </div>
+                        <div>
+                            <span>domain: </span>
+                            <field name="domain"/>
+                        </div>
+                        <div class="d-flex mb-2" style="justify-content: space-between;">
+                            <field name="cost"/>
+                            <field name="start_date" class="text-muted"/>
+                        </div>
+                        <div>
+                            <span>Members: </span>
+                            <field name="member_count"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="practice_project_detail_action" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">practice.project.detail</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>

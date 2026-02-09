@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Sale Form View -->
+    <record id="demos_sale_form_view" model="ir.ui.view">
+        <field name="name">demos.sale.form.view</field>
+        <field name="model">demos.sale</field>
+        <field name="arch" type="xml">
+            <form>
+            <header>
+                <button name="send_by_email" string="Send By Email" type="object" class="oe_highlight"/>
+                <button name="send_for_approval" string="Send For Approval" type="object" class="oe_highlight"/>
+                <field name="states" widget="statusbar"/>
+            </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id" widget="many2one"/>
+                        </group>
+                        <group>
+                            <field name="bill_datetime"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="sale_order_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" widget="many2one"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="sub_total"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Sale Tree View -->
+    <record id="demos_sale_tree_view" model="ir.ui.view">
+        <field name="name">demos.sale.tree.view</field>
+        <field name="model">demos.sale</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="customer_id"/>
+                <field name="sale_order_number"/>
+                <field name="bill_datetime"/>
+            </list>
+        </field>
+    </record>
+    <!-- Sale Action -->
+    <record id="demos_sale_action" model="ir.actions.act_window">
+        <field name="name">Sale</field>
+        <field name="res_model">demos.sale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

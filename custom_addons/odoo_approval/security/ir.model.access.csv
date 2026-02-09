@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_chief,purchase.order.chief,purchase.model_purchase_order,odoo_approval.group_chief_manager,1,1,1,1

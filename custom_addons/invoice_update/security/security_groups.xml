@@ -1,0 +1,20 @@
+<odoo>
+
+    <!-- Create a custom category for your approval module -->
+    <record id="module_category_invoice_approval" model="ir.module.category">
+        <field name="name">Invoice Approval</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Now create your groups under that category -->
+    <record id="group_invoice_first_approval" model="res.groups">
+        <field name="name">Invoice First Level Approval</field>
+        <field name="category_id" ref="invoice_update.module_category_invoice_approval"/>
+    </record>
+
+    <record id="group_invoice_second_approval" model="res.groups">
+        <field name="name">Invoice Second Level Approval</field>
+        <field name="category_id" ref="invoice_update.module_category_invoice_approval"/>
+    </record>
+
+</odoo>

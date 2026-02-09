@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_quick_order_with_payments">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center" style="color: #333;">Viswathara</h2>
+                        <br/>
+                        <table class="table table-bordered mt32">
+                            <thead style="background-color: #f2f2f2;">
+                                <tr>
+                                    <th class="text-left">Product Name</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-right">Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.quick_order_ids" t-as="line">
+                                    <tr>
+                                        <td><span t-field="line.product_id.name"/></td>
+                                        <td class="text-center"><span t-field="line.quantity"/></td>
+                                        <td class="text-right"><span t-field="line.product_id.list_price" t-options='{"widget": "monetary", "display_currency": o.env.company.currency_id}'/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        
+                        <div class="row justify-content-end">
+                            <div class="col-4">
+                                <table class="table table-sm">
+                                    <tr class="border-black">
+                                        <td><strong>Total Amount</strong></td>
+                                        <td class="text-right">
+                                            <t t-set="total" t-value="sum(l.quantity * l.product_id.list_price for l in o.quick_order_ids)"/>
+                                            <span t-esc="total" t-options='{"widget": "monetary", "display_currency": o.env.company.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

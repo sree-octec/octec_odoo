@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="practice_project_report" model="ir.actions.report">
+            <field name="name">practice.project.report</field>
+            <field name="model">practice.project.detail</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">practice_report.project_detail_report</field>
+            <field name="report_file">practice_report.project_detail_report</field>
+            <field name="binding_model_id" ref="model_practice_project_detail"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

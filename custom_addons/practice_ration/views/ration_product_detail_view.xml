@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ration_product_detail_view_list" model="ir.ui.view">
+        <field name="name">ration.product.detail.view.list</field>
+        <field name="model">ration.product.detail</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_template_id"/>
+                <field name="reserved_quantity"/>
+            </list>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<odoo>
+    <template id="report_saleorder_add_specification"
+              inherit_id="sale.report_saleorder_document">
+
+        <!-- Add column header after Description -->
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th class="text-start">
+                Specification
+            </th>
+        </xpath>
+
+        <!-- Add column value only for product lines -->
+        <xpath expr="//td[@name='td_name']" position="after">
+            <td class="text-start">
+                <t t-if="line.product_id.product_tmpl_id and line.product_id.product_tmpl_id.product_specification_ids">
+                    <ul style="padding-left: 0; list-style: none; margin: 0;">
+                        <t t-foreach="line.product_id.product_tmpl_id.product_specification_ids" t-as="spec">
+                            <li>
+                                <strong t-esc="spec.name"/>:
+                                <span t-esc="spec.value"/>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

@@ -1,0 +1,28 @@
+<odoo>
+    <menuitem
+    id="practice_tasks_root_menu"
+    name="Practice"
+    sequence="40"
+    />
+
+    <menuitem
+    id="practice_tasks_customer_menu"
+    parent="practice_tasks_root_menu"
+    action="practice_task_patient_action"
+    sequence="10"
+    />
+
+    <menuitem
+    id="practice_shop_menu"
+    action="practice_shop_action"
+    parent="practice_tasks_root_menu"
+    sequence="20"
+    />
+
+    <menuitem
+    id="practice_shop_franchise_menu"
+    action="practice_shop_franchise_action"
+    parent="practice_tasks_root_menu"
+    sequence="30"
+    />
+</odoo>

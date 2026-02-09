@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_freelance_customer_change,odoo.freelance.customer.change,model_odoo_freelance_customer_change,base.group_user,1,1,1,1
+access_odoo_freelance_quick_order,odoo.freelance.quick.order,model_odoo_freelance_quick_order,base.group_user,1,1,1,1
+access_quick_order_product_line,quick.order.product.line,model_quick_order_product_line,base.group_user,1,1,1,1
+access_quick_order_mail_wizard,quick.order.mail.wizard,model_quick_order_mail_wizard,base.group_user,1,1,1,1

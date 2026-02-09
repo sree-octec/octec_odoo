@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <menuitem id="demo_models_main_menu"
+  name="Custom Models"
+  sequence="40"/>
+  
+  <menuitem id="demo_models_sub_menu"
+  name="Custom Model"
+  parent="demo_models_main_menu"
+  action="action_custom_models"
+  sequence="20"/>
+
+</odoo>

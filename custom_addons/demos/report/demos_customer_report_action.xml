@@ -1,0 +1,14 @@
+<odoo>
+    <record id="action_report_demos_customer" model="ir.actions.report">
+        <field name="name">Customer Report</field>
+        <field name="model">demos.customer</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demos.demos_customer_report_template</field>
+        <field name="report_file">demos.demos_customer_report_template</field>
+        <field name="binding_model_id" ref="model_demos_customer"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">
+            'Customer Report - %s' % (object.name)
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="odoo_freelance_quick_order_view_form" model="ir.ui.view">
+        <field name="name">odoo.freelance.quick.order.view.form</field>
+        <field name="model">odoo.freelance.quick.order</field>
+        <field name="arch" type="xml">
+            <form string="Quick orders">
+                <header>
+                    <button string="Send Mail" class="btn-primary" type="action" name="%(action_quick_order_mail_wizard)d"/>
+                </header>
+                <sheet>
+                    <group string="Add Products">
+                        <field name="quick_order_ids" nolabel="1">
+                            <list editable="bottom">
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" class="btn-primary" type="object" name="action_confirm_quick_order"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>      
+    <record id="action_odoo_freelance_quick_order" model="ir.actions.act_window">
+      <field name="name">Quick Order</field>
+      <field name="res_model">odoo.freelance.quick.order</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>  
+</odoo>

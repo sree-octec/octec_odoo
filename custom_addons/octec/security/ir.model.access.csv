@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_octec_daily_class,access.octec.daily.class,model_octec_daily_class,octec.group_staff,1,0,0,0
+access_octec_daily_class,access.octec.daily.class,model_octec_daily_class,octec.group_manager,1,1,1,1
+access_octec_department,access.octec.department,model_octec_department,octec.group_manager,1,1,1,1
+access_octec_scheme,access.octec.scheme,model_octec_scheme,octec.group_manager,1,1,1,1
+access_octec_subject,access.octec.subject,model_octec_subject,octec.group_manager,1,1,1,1
+access_octec_staff,access.octec.staff,model_octec_staff,octec.group_manager,1,1,1,1
+access_octec_student,access.octec.student,model_octec_student,octec.group_manager,1,1,1,1
+access_octec_student_session,access.octec.student.session,model_octec_student_session,octec.group_manager,1,1,1,1
+access_octec_student_fee,access.octec.student.fee,model_octec_student_fee,octec.group_manager,1,1,1,1
+access_octec_payment,access.octec.payment,model_octec_payment,octec.group_manager,1,1,1,1
+
+
+

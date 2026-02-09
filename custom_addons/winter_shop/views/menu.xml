@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="product_insurance_menu"
+    parent="prod_config_main"
+    action="product_insurance_action"
+    name="Product Insurances"
+    sequence="35"/>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_practice_employee_detail,access.practice.employee.detail,model_practice_employee_detail,base.group_user,1,1,1,1
+access_practice_project_detail,access.practice.project.detail,model_practice_project_detail,base.group_user,1,1,1,1

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_insurance_view_form" model="ir.ui.view">
+        <field name="name">product.insurance.view.form</field>
+        <field name="model">product.insurance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id" widget="many2one"/>
+                        </group>
+                        <group>
+                            <field name="insurance_rate"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_insurance_view_tree" model="ir.ui.view">
+        <field name="name">product.insurance.view.tree</field>
+        <field name="model">product.insurance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category_id" widget="many2one"/>
+            </list>
+        </field>
+    </record>
+    <record id="product_insurance_action" model="ir.actions.act_window">
+        <field name="name">Product Insurances</field>
+        <field name="res_model">product.insurance</field>
+        <field naem="view_mode">list,form</field>
+    </record>
+</odoo>

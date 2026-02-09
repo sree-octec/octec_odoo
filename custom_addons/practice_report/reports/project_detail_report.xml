@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="project_detail_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <h3 class="text-center">Project Details</h3>
+                        <table class="table table-bordered mt34">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"><span>Name</span></th>
+                                    <th class="text-center"><span>Domain</span></th>
+                                    <th class="text-center"><span>Cost</span></th>
+                                    <th class="text-center"><span>Members</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td><span t-field="o.name"/></td>
+                                    <td><span t-field="o.domain"/></td>
+                                    <td><span t-field="o.cost"/></td>
+                                    <td><span t-field="o.member_count"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

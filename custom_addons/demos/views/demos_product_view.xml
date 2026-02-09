@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demos_product_form_view" model="ir.ui.view">
+        <field name="name">demo.product.form.view</field>
+        <field name="model">demos.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" class="o_text_large"/>
+                        </group>
+                        <group>
+                            <field name="product_image" widget="image" class="oe_avatar" nolabel="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="General Information">
+                            <group>
+                                <group>
+                                    <field name="cost_price"/>
+                                    <field name="sell_price"/>
+                                    <field name="discount"/>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="manufacture_date"/>
+                                        <field name="material"/>
+                                        <field name="color"/>
+                                    </group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="demos_product_tree_view" model="ir.ui.view">
+        <field name="name">demos.produt.tree.view</field>
+        <field name="model">demos.product</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="sell_price"/>
+                <field name="material"/>
+                <field name="color"/>
+            </list>
+        </field>
+    </record>
+    <record id="demos_produt_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">demos.product</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
