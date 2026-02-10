@@ -52,17 +52,7 @@ class PurchaseOrder(models.Model):
     #                 )
                 
 
-    def _approval_allowed(self):
-        """Overwrite to include custom permission approval"""
-        res = super(PurchaseOrder,self)._approval_allowed()
-        has_permission = self.env.user.has_group('odoo_approval.po_group_approval_permission')
-        return res and has_permission
-    
     def button_approve(self, *args, **kwargs):
-        print(f"Approval Logic Result: {self._approval_allowed()}")
-        if not self.env.user.has_group('odoo_approval.po_group_approval_permission'):
-            raise UserError(_("Warning for %s: Your Permission Access Revoked! Please contact Administrator.", 
-                        self.env.user.name))
         approver = self.company_id.approval_user
         if self.company_id.is_po_two_level_approval and approver:
             
@@ -90,7 +80,6 @@ class PurchaseOrder(models.Model):
              and self.amount_total < self.env.company.currency_id._convert(
                     self.company_id.po_double_validation_amount, self.currency_id, self.company_id,
                     self.date_order or fields.Date.today())
-             and self.env.user.has_group('odoo_approval.po_group_approval_permission')
             or self.env.user.has_group('odoo_approval.group_chief_manager')
         )
 

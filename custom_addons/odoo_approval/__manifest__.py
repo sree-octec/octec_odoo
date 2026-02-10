@@ -6,7 +6,6 @@
     "summary": "Bring Approval to Purchase Orders",
     "depends": ["base","purchase","mail"],
     "data": [
-        "data/po_group_approval_permission.xml",
         "security/odoo_approval_security_groups.xml",
         "security/ir.model.access.csv",
         #"views/purchase_order_approval_filter_view.xml",

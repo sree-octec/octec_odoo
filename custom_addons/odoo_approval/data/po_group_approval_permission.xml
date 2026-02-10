@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="po_group_approval_permission" model="res.groups">
-    <field name="name">Permission to approve purchase order</field>
-    <field name="category_id" ref="base.module_category_hidden"/>
-    <field name="comment">Allows the user to approve purchase orders</field>
-    </record>
-</odoo>
