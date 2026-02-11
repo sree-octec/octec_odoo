@@ -8,6 +8,9 @@ from odoo.exceptions import UserError
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     
+    # ------------------------------------------------------------------------------
+    #                                  FIELDS
+    # -------------------------------------------------------------------------------
     state = fields.Selection(
         selection_add=[
             ('to approve',),
@@ -53,8 +56,7 @@ class PurchaseOrder(models.Model):
                 
 
     def button_approve(self, *args, **kwargs):
-        approver = self.company_id.approval_user
-        if self.company_id.is_po_two_level_approval and approver:
+        if self.company_id.is_po_two_level_approval:
             
             valid_orders = self.filtered(lambda order: order._approval_allowed())
             valid_orders.write({'state': 'second_approval', 'date_approve': fields.Datetime.now()})

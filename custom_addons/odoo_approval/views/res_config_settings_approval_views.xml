@@ -7,6 +7,13 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//app[@name='purchase']/block[@name='purchase_setting_container']/setting[@id='po_order_approval']/div[hasclass('content-group')]" position="inside">
+                <div>
+                    <label for="first_approval_user_ids" class="col-lg-4 ps-2 o_light_label"/>
+                    <field name="first_approval_user_ids" 
+                    widget="many2many_tags" 
+                    class="col-lg-7" 
+                    domain= "[('share','=',False)]"/>
+                </div>
                 <div class="row mt-2" invisible="not po_order_approval">
                     <field name="is_po_two_level_approval" class="col flex-grow-0 ml16 mr0 pe-2"/>
                     <div class="col ps-0">
@@ -15,8 +22,12 @@
                     </div>
                 </div>
                 <div class="row mt-2" invisible="not is_po_two_level_approval">
-                    <label for="approval_user" class="col-lg-4 ms-5 ps-2 o_light_label"/>
-                    <field name="approval_user" widget="many2one" class="col-lg-7" domain= "[('share','=',False)]"/>
+                    <label for="second_approval_user_ids" class="col-lg-4 ms-5 ps-2 o_light_label"/>
+                    <field name="second_approval_user_ids" 
+                    widget="many2many_tags" 
+                    class="col-lg-7" 
+                    domain= "[('share','=',False)]">
+                    </field>
                 </div>
             </xpath>
 
