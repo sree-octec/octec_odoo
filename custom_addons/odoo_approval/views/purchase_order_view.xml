@@ -5,9 +5,11 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
-
+            <xpath expr="//button[@name='button_approve']" position="attributes">
+                <attribute name="groups"></attribute>
+                <attribute name="invisible">state != 'to approve' or can_approve == False</attribute>
+            </xpath>
             <xpath expr="//header/button[@name='action_rfq_send']" position="before">
-
                 <button name="action_final_approve"
                 type="object"
                 class="oe_highlight"

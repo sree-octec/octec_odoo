@@ -61,3 +61,4 @@ class ResConfigSettingsApproval(models.TransientModel):
             res.update(second_approval_user_ids=[(6, 0, ast.literal_eval(second_user_ids))])
             
         return res
+    
