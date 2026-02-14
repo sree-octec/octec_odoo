@@ -6,22 +6,12 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="//search" position="inside">
-                    <filter string="Approved RFQS" 
-                            name="approved_rfqs" 
-                            domain="[('state', '=', 'rfq_approved')]"
-                            groups="purchase.group_purchase_user"/>
-                    <filter string="Waiting Manager Approval" 
-                            name="waiting_first_approval" 
-                            domain="[('state', '=', 'first_approval')]"
-                            groups="purchase.group_purchase_manager"/>
-                    
-                    <filter string="Waiting Senior Manager Approval" 
-                            name="waiting_second_approval" 
-                            domain="[('state', '=', 'second_approval')]"
-                            groups="odoo_approval.group_purchase_chief"/>
+                <xpath expr="//search" position="inside">
+                    <filter string="First Level Approval" 
+                            name="first_level_approval" 
+                            domain="[('state', '=', 'to approve')]"/>
                     <separator/>
-                </xpath> -->
+                </xpath>
             </field>
         </record>
     </data>
