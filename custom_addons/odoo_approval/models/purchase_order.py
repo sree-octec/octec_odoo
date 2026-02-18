@@ -38,32 +38,76 @@ class PurchaseOrder(models.Model):
     #                                  COMPUTE/OVERRIDDEN METHODS
     # -------------------------------------------------------------------------------
     
+    
     def _compute_can_approve(self):
-        for order in self:
-            order.can_approve = order._approval_allowed()
-        
-    def _approval_allowed(self):
-        """Overrides default approval rights to users specific in the first approver list"""
-        
-        self.ensure_one()
         params = self.env['ir.config_parameter'].sudo()
-        first_level_approvers = params.get_param("odoo_approval.first_approval_user_ids")
-        _logger.info("DEBUG: Raw parameter value from DB: %s", first_level_approvers)
-        try:
-            first_level_approvers_ids = ast.literal_eval(first_level_approvers) if first_level_approvers else []
-        except(ValueError, SyntaxError):
-            first_level_approvers_ids = []
-            
-        _logger.info("DEBUG: Parsed Allowed IDs: %s", first_level_approvers_ids)
-        _logger.info("DEBUG: Current User ID: %s", self.env.user.id)
+        initial_raw = params.get_param("odoo_approval.first_approval_user_ids")
+        final_raw = params.get_param("odoo_approval.second_approval_user_ids")
         
+        try:
+            initial_ids = ast.literal_eval(initial_raw) if initial_raw else []
+            final_ids = ast.literal_eval(final_raw) if final_raw else []
+        except:
+            initial_ids = final_ids = []
+
+        for order in self:
+            if order.state == 'to approve':
+                order.can_approve = order._approval_allowed(initial_approval_allowed_ids=initial_ids)
+            elif order.state == 'second_approval':
+                order.can_approve = order._final_approval_allowed(final_approval_allowed_ids=final_ids)
+            else:
+                order.can_approve = False
+                
+
+    def _approval_allowed(self, initial_approval_allowed_ids=None):
+        self.ensure_one()
+        
+        # Use cached IDs if provided, otherwise fetch (fallback)
+        if initial_approval_allowed_ids is None:
+            params = self.env['ir.config_parameter'].sudo()
+            initial_approval_raw_ids = params.get_param("odoo_approval.first_approval_user_ids")
+            try:
+                initial_approval_allowed_ids = ast.literal_eval(initial_approval_raw_ids) if initial_approval_raw_ids else []
+            except:
+                initial_approval_allowed_ids = []
+
         is_standard_allowed = (
             self.company_id.po_double_validation == 'one_step'
             or (self.company_id.po_double_validation == 'two_step'
                 and self.amount_total < self.env.company.currency_id._convert(
                     self.company_id.po_double_validation_amount, self.currency_id, self.company_id,
                     self.date_order or fields.Date.today())))
-        return is_standard_allowed or (self.env.user.id in first_level_approvers_ids)
+                    
+        return is_standard_allowed or (self.env.user.id in initial_approval_allowed_ids)
+    
+    
+    def _final_approval_allowed(self, final_approval_allowed_ids=None):
+            """
+            Checks if the current user is allowed to give final approval.
+            Includes a check for the minimum double validation amount.
+            """
+            self.ensure_one()
+            
+            # 1. Fetch IDs if they weren't passed from the compute method
+            if final_approval_allowed_ids is None:
+                params = self.env['ir.config_parameter'].sudo()
+                final_approval_raw_ids = params.get_param("odoo_approval.second_approval_user_ids")
+                try:
+                    # Use ast to safely parse the string list from System Parameters
+                    final_approval_allowed_ids = ast.literal_eval(final_approval_raw_ids) if final_approval_raw_ids else []
+                except (ValueError, SyntaxError):
+                    final_approval_allowed_ids = []
+
+            # 2. Check the minimum amount (Standard Odoo Double Validation logic)
+            is_standard_allowed = (
+                self.company_id.po_double_validation == 'one_step'
+                or (self.company_id.po_double_validation == 'two_step'
+                    and self.amount_total < self.env.company.currency_id._convert(
+                        self.company_id.po_double_validation_amount, self.currency_id, self.company_id,
+                        self.date_order or fields.Date.today())))
+                        
+            # 3. Logic: Allowed if order is under the limit OR user is a designated final approver
+            return is_standard_allowed or (self.env.user.id in final_approval_allowed_ids)
         
         
     
@@ -71,42 +115,51 @@ class PurchaseOrder(models.Model):
     #                                  BUTTON ACTIONS
     # -------------------------------------------------------------------------------
     
+    
+    def button_approve(self, force=False):
+        is_po_two_level_approval = self.env['ir.config_parameter'].sudo().get_param("odoo_approval.is_po_two_level_approval")
+        if not is_po_two_level_approval:
+            super(PurchaseOrder, self).button_approve(force=False)
+        else:
+            self.action_final_approve()
+        return {}
 
     def button_confirm(self):
-        """ 
-        Inherit confirm button to trigger activities for specific approvers 
-        when the order enters the 'to approve' state.
-        """
-        res = super(PurchaseOrder, self).button_confirm()
+            res = super(PurchaseOrder, self).button_confirm()
+            # Optimization: Fetch settings ONCE before starting the loop
+            params = self.env['ir.config_parameter'].sudo()
+            initial_approval_raw_ids = params.get_param("odoo_approval.first_approval_user_ids")
+            try:
+                approver_ids = ast.literal_eval(initial_approval_raw_ids) if initial_approval_raw_ids else []
+            except:
+                approver_ids = []
 
-        for order in self:
-            if order.state == 'to approve':
-                # 1. Get the list of approvers from parameters
-                params = self.env['ir.config_parameter'].sudo()
-                raw_ids = params.get_param("odoo_approval.first_approval_user_ids")
-                
-                try:
-                    approver_ids = ast.literal_eval(raw_ids) if raw_ids else []
-                except:
-                    continue
+            if not approver_ids:
+                return res
 
-                # 2. Schedule an activity for each selected user
+            # Pre-fetch partner IDs to avoid repeated browse/mapped calls inside loop
+            approver_partners = self.env['res.users'].sudo().browse(approver_ids).partner_id.ids
+
+            for order in self.filtered(lambda o: o.state == 'to approve'):
+                # Schedule activity
                 for user_id in approver_ids:
                     order.activity_schedule(
                         'mail.mail_activity_data_todo',
                         user_id=user_id,
-                        note=_("Please review and approve this Purchase Order: %s") % order.name,
+                        note=_("Approval Required for %s") % order.name,
                         summary=_("Purchase Approval Required")
                     )
                 
-                # 3. Post a message in the chatter and notify the approvers' inboxes
+                # Notify in one go
                 order.message_post(
-                    body=_("The order is waiting for first-level approval."),
-                    partner_ids=self.env['res.users'].browse(approver_ids).partner_id.ids,
+                    body=_("Waiting for manager approval."),
+                    partner_ids=approver_partners,
                     subtype_xmlid='mail.mt_comment'
                 )
-        return res
+            return res
         
     
     def action_final_approve(self):
-        pass
+        self = self.filtered(lambda order: order._final_approval_allowed(None))
+        self.write({'state': 'purchase', 'date_approve': fields.Datetime.now()})
+        self.filtered(lambda p: p.company_id.po_lock == 'lock').write({'state': 'done'})

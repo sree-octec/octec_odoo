@@ -14,8 +14,7 @@
                 type="object"
                 class="oe_highlight"
                 string="Approve"
-                invisible="state not in ('second_approval')"
-                groups="odoo_approval.group_chief_manager"/>
+                invisible="state != 'second_approval' or can_approve == False"/>
             </xpath>
             <xpath expr="//field[@name='state']" position="attributes">
                 <attribute name="statusbar_visible">draft,sent,purchase</attribute>
