@@ -123,6 +123,14 @@ class PurchaseOrder(models.Model):
             if is_two_level and order.state == 'to approve':
                 _logger.info(f"{self.env.user.name} approved. Moving to Second Approval.")
                 order.write({'state': 'second_approval'})
+                params = self.env['ir.config_parameter'].sudo()
+                final_approval_raw_ids = params.get_param("odoo_approval.second_approval_user_ids")
+                try:
+                    approver_ids = ast.literal_eval(final_approval_raw_ids) if final_approval_raw_ids else []
+                except:
+                    approver_ids = []
+
+                self.approver_notification_activity(approver_ids, 'second_approval')
                 
             elif order.state == 'second_approval':
                 if order._final_approval_allowed():
@@ -151,13 +159,13 @@ class PurchaseOrder(models.Model):
                 return res
 
             # Pre-fetch partner IDs to avoid repeated browse/mapped calls inside loop
-            self.approver_notification_activity(approver_ids)
+            self.approver_notification_activity(approver_ids, 'to approve')
             return res
         
-    def approver_notification_activity(self, approver_ids):
+    def approver_notification_activity(self, approver_ids, approval_status):
         approver_partners = self.env['res.users'].sudo().browse(approver_ids).partner_id.ids
 
-        for order in self.filtered(lambda o: o.state == 'to approve'):
+        for order in self.filtered(lambda o: o.state == approval_status):
             # Schedule activity
             for user_id in approver_ids:
                 order.activity_schedule(
