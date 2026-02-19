@@ -10,7 +10,9 @@
                     <filter string="First Level Approval" 
                             name="first_level_approval" 
                             domain="[('state', '=', 'to approve')]"/>
-                    <separator/>
+                    <filter string="second Level Approval" 
+                            name="second_level_approval" 
+                            domain="[('state', '=', 'second_approval')]"/>
                 </xpath>
             </field>
         </record>
