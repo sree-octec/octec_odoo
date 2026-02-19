@@ -97,14 +97,13 @@ class PurchaseOrder(models.Model):
                     final_approval_allowed_ids = ast.literal_eval(final_approval_raw_ids) if final_approval_raw_ids else []
                 except (ValueError, SyntaxError):
                     final_approval_allowed_ids = []
+            _logger.info(f"final approval ids:{final_approval_allowed_ids}")
 
             # 2. Check the minimum amount (Standard Odoo Double Validation logic)
-            is_standard_allowed = (
-                self.company_id.po_double_validation == 'one_step'
-                or (self.company_id.po_double_validation == 'two_step'
-                    and self.amount_total < self.env.company.currency_id._convert(
+            is_standard_allowed = (self.amount_total < self.env.company.currency_id._convert(
                         self.company_id.po_double_validation_amount, self.currency_id, self.company_id,
-                        self.date_order or fields.Date.today())))
+                        self.date_order or fields.Date.today()))
+            _logger.info(f"cheking final approval: {is_standard_allowed}................")
                         
             # 3. Logic: Allowed if order is under the limit OR user is a designated final approver
             return is_standard_allowed or (self.env.user.id in final_approval_allowed_ids)
@@ -117,12 +116,26 @@ class PurchaseOrder(models.Model):
     
     
     def button_approve(self, force=False):
-        is_po_two_level_approval = self.env['ir.config_parameter'].sudo().get_param("odoo_approval.is_po_two_level_approval")
-        if not is_po_two_level_approval:
-            super(PurchaseOrder, self).button_approve(force=False)
-        else:
-            self.action_final_approve()
-        return {}
+        is_two_level = self.env['ir.config_parameter'].sudo().get_param("odoo_approval.is_po_two_level_approval")
+        _logger.info(f"{is_two_level} approval............")
+        
+        for order in self:
+            if is_two_level and order.state == 'to approve':
+                _logger.info(f"{self.env.user.name} approved. Moving to Second Approval.")
+                order.write({'state': 'second_approval'})
+                
+            elif order.state == 'second_approval':
+                if order._final_approval_allowed():
+                    _logger.info(f"{self.env.user.name} approved. Finalizing PO.")
+                    super(PurchaseOrder, order).button_approve(force=force)
+                else:
+                    raise UserError("Only an authorized person can provide the final approval.")
+
+            else:
+                _logger.info("checking approval............")
+                super(PurchaseOrder, order).button_approve(force=force)
+                
+        return True
 
     def button_confirm(self):
             res = super(PurchaseOrder, self).button_confirm()
@@ -150,7 +163,6 @@ class PurchaseOrder(models.Model):
                         summary=_("Purchase Approval Required")
                     )
                 
-                # Notify in one go
                 order.message_post(
                     body=_("Waiting for manager approval."),
                     partner_ids=approver_partners,
@@ -160,6 +172,24 @@ class PurchaseOrder(models.Model):
         
     
     def action_final_approve(self):
-        self = self.filtered(lambda order: order._final_approval_allowed(None))
-        self.write({'state': 'purchase', 'date_approve': fields.Datetime.now()})
-        self.filtered(lambda p: p.company_id.po_lock == 'lock').write({'state': 'done'})
+        # 1. Permission Check
+        final_approval_orders = self.filtered(lambda order: order._final_approval_allowed())
+        
+        if not final_approval_orders:
+            raise UserError("You do not have the required permissions for final approval.")
+
+        for order in final_approval_orders:
+            order.order_line._validate_analytic_distribution()
+            order._add_supplier_to_product()
+            order.write({
+                'state': 'purchase',
+                'date_approve': fields.Datetime.now(),
+            })
+            order._create_picking()
+            if order.partner_id not in order.message_partner_ids:
+                order.message_subscribe([order.partner_id.id])
+
+            if order.company_id.po_lock == 'lock':
+                order.write({'state': 'done'})
+
+        return True

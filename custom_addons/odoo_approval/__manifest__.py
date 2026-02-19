@@ -4,7 +4,7 @@
     "licence": "LGPL-3",
     "author": "sreejith vijayakumar",
     "summary": "Bring Approval to Purchase Orders",
-    "depends": ["base","purchase","mail"],
+    "depends": ["base","purchase","mail","stock", "purchase_stock"],
     "data": [
         "security/odoo_approval_security_groups.xml",
         "security/ir.model.access.csv",
