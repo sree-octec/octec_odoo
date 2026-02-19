@@ -151,24 +151,28 @@ class PurchaseOrder(models.Model):
                 return res
 
             # Pre-fetch partner IDs to avoid repeated browse/mapped calls inside loop
-            approver_partners = self.env['res.users'].sudo().browse(approver_ids).partner_id.ids
-
-            for order in self.filtered(lambda o: o.state == 'to approve'):
-                # Schedule activity
-                for user_id in approver_ids:
-                    order.activity_schedule(
-                        'mail.mail_activity_data_todo',
-                        user_id=user_id,
-                        note=_("Approval Required for %s") % order.name,
-                        summary=_("Purchase Approval Required")
-                    )
-                
-                order.message_post(
-                    body=_("Waiting for manager approval."),
-                    partner_ids=approver_partners,
-                    subtype_xmlid='mail.mt_comment'
-                )
+            self.approver_notification_activity(approver_ids)
             return res
+        
+    def approver_notification_activity(self, approver_ids):
+        approver_partners = self.env['res.users'].sudo().browse(approver_ids).partner_id.ids
+
+        for order in self.filtered(lambda o: o.state == 'to approve'):
+            # Schedule activity
+            for user_id in approver_ids:
+                order.activity_schedule(
+                    'mail.mail_activity_data_todo',
+                    user_id=user_id,
+                    note=_("Approval Required for %s") % order.name,
+                    summary=_("Purchase Approval Required")
+                )
+            
+            order.message_post(
+                body=_("Waiting for approval."),
+                partner_ids=approver_partners,
+                subtype_xmlid='mail.mt_comment'
+            )
+        
         
     
     def action_final_approve(self):
