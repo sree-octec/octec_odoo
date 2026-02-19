@@ -98,13 +98,11 @@ class PurchaseOrder(models.Model):
                 except (ValueError, SyntaxError):
                     final_approval_allowed_ids = []
             _logger.info(f"final approval ids:{final_approval_allowed_ids}")
-
             # 2. Check the minimum amount (Standard Odoo Double Validation logic)
             is_standard_allowed = (self.amount_total < self.env.company.currency_id._convert(
                         self.company_id.po_double_validation_amount, self.currency_id, self.company_id,
                         self.date_order or fields.Date.today()))
             _logger.info(f"cheking final approval: {is_standard_allowed}................")
-                        
             # 3. Logic: Allowed if order is under the limit OR user is a designated final approver
             return is_standard_allowed or (self.env.user.id in final_approval_allowed_ids)
         
@@ -129,16 +127,13 @@ class PurchaseOrder(models.Model):
                     approver_ids = ast.literal_eval(final_approval_raw_ids) if final_approval_raw_ids else []
                 except:
                     approver_ids = []
-
                 self.approver_notification_activity(approver_ids, 'second_approval')
-                
             elif order.state == 'second_approval':
                 if order._final_approval_allowed():
                     _logger.info(f"{self.env.user.name} approved. Finalizing PO.")
                     super(PurchaseOrder, order).button_approve(force=force)
                 else:
                     raise UserError("Only an authorized person can provide the final approval.")
-
             else:
                 _logger.info("checking approval............")
                 super(PurchaseOrder, order).button_approve(force=force)
@@ -180,8 +175,6 @@ class PurchaseOrder(models.Model):
                 partner_ids=approver_partners,
                 subtype_xmlid='mail.mt_comment'
             )
-        
-        
     
     def action_final_approve(self):
         # 1. Permission Check
